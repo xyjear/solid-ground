@@ -36,7 +36,7 @@ export default function FloatingShape({
 
   return (
     <mesh ref={meshRef} position={position} geometry={geometry}>
-      <meshBasicMaterial color="#D4A843" wireframe />
+      <meshBasicMaterial color="#D4A843" wireframe transparent opacity={0.25} />
     </mesh>
   );
 }

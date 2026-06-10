@@ -14,7 +14,7 @@ const shapes: {
 }[] = [
   {
     geometry: new THREE.IcosahedronGeometry(1.2, 0),
-    position: [-3, 1, -4],
+    position: [-5, 2.5, -6],
     rotationSpeed: [0.3, 0.5, 0.1],
     floatSpeed: 0.6,
     floatAmplitude: 0.3,
@@ -22,7 +22,7 @@ const shapes: {
   },
   {
     geometry: new THREE.TorusGeometry(0.9, 0.3, 16, 32),
-    position: [3.5, -0.5, -3],
+    position: [5, -1.5, -5],
     rotationSpeed: [0.4, 0.2, 0.3],
     floatSpeed: 0.8,
     floatAmplitude: 0.25,
@@ -30,7 +30,7 @@ const shapes: {
   },
   {
     geometry: new THREE.OctahedronGeometry(1, 0),
-    position: [-2, -2, -5],
+    position: [-4.5, -3, -7],
     rotationSpeed: [0.2, 0.6, 0.15],
     floatSpeed: 0.5,
     floatAmplitude: 0.35,
@@ -38,7 +38,7 @@ const shapes: {
   },
   {
     geometry: new THREE.BoxGeometry(0.8, 0.8, 0.8),
-    position: [2.5, 1.5, -4.5],
+    position: [4.5, 2.5, -6],
     rotationSpeed: [0.5, 0.3, 0.2],
     floatSpeed: 0.7,
     floatAmplitude: 0.2,

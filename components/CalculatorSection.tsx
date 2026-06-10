@@ -77,8 +77,8 @@ export default function CalculatorSection() {
   const price = calculatePrice();
   const totalSteps = 4;
 
-  const scrollToResult = () => {
-    resultRef.current?.scrollIntoView({ behavior: "smooth" });
+  const scrollToContact = () => {
+    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -228,10 +228,10 @@ export default function CalculatorSection() {
             </button>
           ) : (
             <button
-              onClick={scrollToResult}
+              onClick={scrollToContact}
               className="px-8 py-3 bg-gold text-dark font-semibold rounded-lg transition-all hover:scale-105"
             >
-              Получить смету
+              Отправить заявку
             </button>
           )}
         </div>

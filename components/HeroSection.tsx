@@ -45,7 +45,7 @@ export default function HeroSection() {
           transition={{ duration: 0.8, delay: 1.1 }}
         >
           <a
-            href="#contact"
+            href="#calculator"
             className="px-8 py-4 bg-gold text-dark font-semibold rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(212,168,67,0.4)]"
           >
             Рассчитать стоимость
