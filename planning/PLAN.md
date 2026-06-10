@@ -21,6 +21,7 @@
 - `ParallaxLayer.tsx` — reusable wrapper with useTransform + scrollYProgress
 - `Counter.tsx` — count-up with motionValue + useSpring
 - `Modal.tsx` — reusable overlay with close-on-escape
+**Key decisions:** All infrastructure components are client-side only; Scene3D uses dynamic import with ssr: false
 **Dependencies:** Phase 1 must be complete
 
 ## Phase 3: HeroSection (first screen)
@@ -33,6 +34,7 @@
 - Subtitle + two CTA buttons with hover effects
 - Animated scroll indicator at bottom
 - Mobile: no Canvas, static bg
+**Key decisions:** All 3D rendering happens client-side only; mobile completely skips Canvas for performance
 **Dependencies:** Phase 2 for Scene3D, CustomCursor context
 
 ## Phase 4: Content sections (Services, About, Portfolio, Timeline)
@@ -42,6 +44,7 @@
 - `AboutSection.tsx` — 2-col layout, 4 animated Counters (spring-based)
 - `PortfolioSection.tsx` — filter buttons, card grid with next/image, hover overlay/zoom, click → Modal with gallery; parallax per card
 - `TimelineSection.tsx` — vertical center line (animated thickness), 5 stages alternating left/right, scroll-reveal with slide
+**Key decisions:** All content hardcoded in components (no CMS); picsum.photos for portfolio placeholders; SVG icons inline
 **Dependencies:** Phase 3 layout style established; Counter, Modal, ParallaxLayer from Phase 2
 
 ## Phase 5: Interactive sections (Reviews, Calculator, Map)
@@ -50,6 +53,7 @@
 - `ReviewsSection.tsx` — horizontal carousel, autoplay + pause on hover, arrows + dots, 5-star gold ratings
 - `CalculatorSection.tsx` — 4-step multi-step form (house type → area slider → material → extras), animated total price counter, "Получить смету" scrolls to contact
 - `MapSection.tsx` — simplified SVG map of Russia, clickable city tags below, object count popup
+**Key decisions:** Calculator is fully client-side (no backend); SVG map is inline hardcoded paths (no external map API)
 **Dependencies:** Phase 4 complete (styling patterns established)
 
 ## Phase 6: ContactSection + Footer + polish
@@ -60,6 +64,7 @@
 - `app/page.tsx` — compose all sections in order
 - `app/globals.css` — grain/noise pseudo-element, scrollbar styling, selection color
 - Run `npm run build`, fix any errors
+**Key decisions:** Form is frontend-only (no backend handler); build must pass with 0 errors for Vercel deploy
 **Dependencies:** All previous phases
 
 ## High-level timeline

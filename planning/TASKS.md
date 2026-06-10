@@ -82,7 +82,7 @@
 - **Depends on:** none
 - [ ] Not started
 
-## Phase 3: HeroSection
+## Phase 3: HeroSection (first screen)
 
 ### Task 3.1: Create HeroSection
 - **What:** Full-screen hero with 3D scene, title, CTA, scroll indicator
@@ -95,7 +95,7 @@
 - **Depends on:** 2.2
 - [ ] Not started
 
-## Phase 4: Content sections
+## Phase 4: Content sections (Services, About, Portfolio, Timeline)
 
 ### Task 4.1: Create ServicesSection
 - **What:** 6 service cards in scroll-reveal grid
@@ -121,7 +121,7 @@
 - **Depends on:** none
 - [ ] Not started
 
-## Phase 5: Interactive sections
+## Phase 5: Interactive sections (Reviews, Calculator, Map)
 
 ### Task 5.1: Create ReviewsSection
 - **What:** Horizontal carousel with autoplay
@@ -161,8 +161,14 @@
 - **Depends on:** none
 - [ ] Not started
 
-### Task 6.3: Compose page.tsx and verify build
-- **What:** Assemble all sections in page.tsx, run build
-- **Details:** `app/page.tsx` — import all sections, render in order: Hero, Services, About, Portfolio, Timeline, Reviews, Calculator, Map, Contact, Footer. Wrap main in `<main>`. Run `npm run build`, fix any TS/import errors.
+### Task 6.3: Compose all sections in page.tsx
+- **What:** Import and arrange all sections in the main page
+- **Details:** `app/page.tsx` — import all sections, render in order: Hero, Services, About, Portfolio, Timeline, Reviews, Calculator, Map, Contact, Footer. Wrap in `<main>`.
 - **Depends on:** 3.1, 4.1, 4.2, 4.3, 4.4, 5.1, 5.2, 5.3, 6.1, 6.2
+- [ ] Not started
+
+### Task 6.4: Run build and fix errors
+- **What:** Verify project builds without errors
+- **Details:** Run `npm run build` from project root. Fix any TypeScript errors, missing imports, or configuration issues. Ensure no `window is not defined` errors (3D must be dynamic import with ssr: false).
+- **Depends on:** 6.3
 - [ ] Not started
