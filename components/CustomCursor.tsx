@@ -1,26 +1,31 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 
 export default function CustomCursor() {
+  const [isDesktop, setIsDesktop] = useState(false);
   const mouseX = useMotionValue(-100);
   const mouseY = useMotionValue(-100);
   const springX = useSpring(mouseX, { stiffness: 300, damping: 30 });
   const springY = useSpring(mouseY, { stiffness: 300, damping: 30 });
 
   useEffect(() => {
+    setIsDesktop(window.matchMedia("(pointer: fine)").matches);
+  }, []);
+
+  useEffect(() => {
+    if (!isDesktop) return;
     const handleMouse = (e: MouseEvent) => {
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
     };
     window.addEventListener("mousemove", handleMouse);
     return () => window.removeEventListener("mousemove", handleMouse);
-  }, [mouseX, mouseY]);
+  }, [mouseX, mouseY, isDesktop]);
 
   useEffect(() => {
-    const isTouch = "ontouchstart" in window;
-    if (isTouch) return;
+    if (!isDesktop) return;
 
     document.body.style.cursor = "none";
 
@@ -38,7 +43,9 @@ export default function CustomCursor() {
       window.removeEventListener("mouseover", handleHover);
       document.body.style.cursor = "";
     };
-  }, []);
+  }, [isDesktop]);
+
+  if (!isDesktop) return null;
 
   return (
     <>

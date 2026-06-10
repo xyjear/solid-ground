@@ -1,7 +1,7 @@
 "use client";
 
-import { ReactLenis, useLenis } from "lenis/react";
-import { useEffect } from "react";
+import { ReactLenis, type LenisRef } from "lenis/react";
+import { useEffect, useRef } from "react";
 import { cancelFrame, frame } from "framer-motion";
 
 export default function LenisProvider({
@@ -9,20 +9,20 @@ export default function LenisProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const lenis = useLenis();
+  const lenisRef = useRef<LenisRef>(null);
 
   useEffect(() => {
-    if (!lenis) return;
     const update = (data: { timestamp: number }) =>
-      lenis.raf(data.timestamp);
+      lenisRef.current?.lenis?.raf(data.timestamp);
     frame.update(update, true);
     return () => cancelFrame(update);
-  }, [lenis]);
+  }, []);
 
   return (
     <ReactLenis
       root
       options={{ lerp: 0.08, duration: 1.2, autoRaf: false }}
+      ref={lenisRef}
     >
       {children}
     </ReactLenis>
