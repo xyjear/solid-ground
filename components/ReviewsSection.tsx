@@ -41,7 +41,7 @@ function Stars() {
   return (
     <div className="flex gap-1">
       {Array.from({ length: 5 }).map((_, i) => (
-        <svg key={i} viewBox="0 0 20 20" fill="#D4A843" className="w-4 h-4">
+        <svg key={i} aria-hidden="true" viewBox="0 0 20 20" fill="#D4A843" className="w-4 h-4">
           <path d="M10 1l2.39 4.84 5.34.78-3.86 3.77.91 5.33L10 13.47l-4.78 2.51.91-5.33L2.27 6.62l5.34-.78L10 1z" />
         </svg>
       ))}

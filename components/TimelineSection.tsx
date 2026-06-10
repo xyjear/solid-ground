@@ -6,7 +6,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 const stages = [
   {
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-8 h-8 text-gold">
+      <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-8 h-8 text-gold">
         <path d="M12 3v3m0 0l3-3m-3 3L9 3m3 3v3" />
       </svg>
     ),
@@ -15,7 +15,7 @@ const stages = [
   },
   {
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-8 h-8 text-gold">
+      <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-8 h-8 text-gold">
         <path d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V7M3 7l9-4 9 4M3 7l9 4m0 0l9-4m-9 4v10" />
       </svg>
     ),
@@ -24,7 +24,7 @@ const stages = [
   },
   {
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-8 h-8 text-gold">
+      <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-8 h-8 text-gold">
         <path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0H5m14 0h2m-2 0l-2-2m2 2l2 2" />
       </svg>
     ),
@@ -33,7 +33,7 @@ const stages = [
   },
   {
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-8 h-8 text-gold">
+      <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-8 h-8 text-gold">
         <rect x="3" y="3" width="18" height="18" rx="2" />
         <path d="M3 9h18M9 3v18" />
       </svg>
@@ -43,7 +43,7 @@ const stages = [
   },
   {
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-8 h-8 text-gold">
+      <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-8 h-8 text-gold">
         <path d="M9 12l2 2 4-4M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
       </svg>
     ),
@@ -55,11 +55,9 @@ const stages = [
 function StageCard({
   stage,
   index,
-  lineProgress,
 }: {
   stage: (typeof stages)[number];
   index: number;
-  lineProgress: number;
 }) {
   const isLeft = index % 2 === 0;
   return (
@@ -116,7 +114,7 @@ export default function TimelineSection() {
         </div>
         <div className="space-y-12 md:space-y-16">
           {stages.map((stage, i) => (
-            <StageCard key={i} stage={stage} index={i} lineProgress={0} />
+            <StageCard key={i} stage={stage} index={i} />
           ))}
         </div>
       </div>
