@@ -56,7 +56,9 @@ export default function ReviewsSection() {
   const touchStartX = useRef(0);
 
   useEffect(() => {
-    setIsTouch("ontouchstart" in window || navigator.maxTouchPoints > 0);
+    setIsTouch(
+      !window.matchMedia("(hover: hover) and (pointer: fine)").matches
+    );
   }, []);
 
   const next = useCallback(() => {
@@ -99,7 +101,7 @@ export default function ReviewsSection() {
       >
         Отзывы клиентов
       </motion.h2>
-      <div className="relative">
+      <div className="relative min-h-[300px]">
         <AnimatePresence mode="wait">
           <motion.div
             key={current}
