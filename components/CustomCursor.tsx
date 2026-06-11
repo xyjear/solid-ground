@@ -5,6 +5,7 @@ import { motion, useMotionValue, useSpring } from "framer-motion";
 
 export default function CustomCursor() {
   const [isDesktop, setIsDesktop] = useState(false);
+  const [isHovering, setIsHovering] = useState(false);
   const mouseX = useMotionValue(-100);
   const mouseY = useMotionValue(-100);
   const springX = useSpring(mouseX, { stiffness: 300, damping: 30 });
@@ -27,21 +28,20 @@ export default function CustomCursor() {
   useEffect(() => {
     if (!isDesktop) return;
 
-    document.body.style.cursor = "none";
+    const style = document.createElement("style");
+    style.textContent = `* { cursor: none !important; }`;
+    document.head.appendChild(style);
 
     const handleHover = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
-      const isCTA = target.closest("a, button, [data-cursor]");
-      document.documentElement.style.setProperty(
-        "--cursor-scale",
-        isCTA ? "1.5" : "1"
-      );
+      const isCTA = target.closest("a, button, [role='button'], input, textarea, select");
+      setIsHovering(!!isCTA);
     };
 
     window.addEventListener("mouseover", handleHover);
     return () => {
       window.removeEventListener("mouseover", handleHover);
-      document.body.style.cursor = "";
+      style.remove();
     };
   }, [isDesktop]);
 
@@ -56,7 +56,7 @@ export default function CustomCursor() {
           y: springY,
           translateX: "-50%",
           translateY: "-50%",
-          scale: "var(--cursor-scale, 1)",
+          scale: isHovering ? 1.5 : 1,
         }}
       />
       <motion.div
@@ -67,6 +67,7 @@ export default function CustomCursor() {
           translateX: "-50%",
           translateY: "-50%",
         }}
+        animate={{ scale: isHovering ? 2.5 : 1 }}
       />
     </>
   );

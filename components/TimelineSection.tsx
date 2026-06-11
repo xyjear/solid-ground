@@ -61,7 +61,7 @@ function StageCard({
 }) {
   const isLeft = index % 2 === 0;
   return (
-    <div className="flex items-center justify-center md:justify-normal gap-8 relative">
+    <div className={`flex items-center justify-center gap-8 relative ${isLeft ? "" : "md:flex-row-reverse"}`}>
       <div className={`flex-1 ${isLeft ? "md:text-right md:pr-10" : "md:text-left md:pl-10"}`}>
         <motion.div
           className="bg-dark-800 border border-white/5 rounded-xl p-6"

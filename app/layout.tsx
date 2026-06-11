@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Manrope, Outfit } from "next/font/google";
 import "./globals.css";
 import LenisProvider from "@/components/LenisProvider";
+import AnchorHandler from "@/components/AnchorHandler";
 import CustomCursor from "@/components/CustomCursor";
 import ScrollProgressBar from "@/components/ScrollProgressBar";
 
@@ -34,6 +35,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-dark text-white">
         <LenisProvider>
+          <AnchorHandler />
           <CustomCursor />
           <ScrollProgressBar />
           {children}
