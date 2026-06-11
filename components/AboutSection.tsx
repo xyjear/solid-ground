@@ -6,7 +6,7 @@ import Counter from "./Counter";
 import Modal from "./Modal";
 
 const stats = [
-  { target: 12, suffix: "", label: "лет на рынке" },
+  { target: 14, suffix: "", label: "лет на рынке" },
   { target: 87, suffix: "+", label: "сданных объектов" },
   { target: 250, suffix: "+", label: "сотрудников" },
   { target: 8, suffix: "", label: "мес — средний срок стройки" },
@@ -22,7 +22,7 @@ export default function AboutSection() {
           <h3 className="text-2xl font-heading font-bold text-gold">О компании SolidGround</h3>
           <p className="text-white/70 leading-relaxed">
             SolidGround основана в 2012 году группой инженеров-строителей с многолетним опытом
-            работы в крупнейших строительных компаниях России. За 12 лет мы прошли путь от
+            работы в крупнейших строительных компаниях России. За 14 лет мы прошли путь от
             небольших частных заказов до масштабных коммерческих проектов.
           </p>
           <p className="text-white/70 leading-relaxed">
@@ -37,7 +37,7 @@ export default function AboutSection() {
             На все работы даём гарантию до 5 лет.
           </p>
           <p className="text-white/70 leading-relaxed">
-            За 12 лет мы сдали 87 объектов — от уютных загородных домов до бизнес-центров
+            За 14 лет мы сдали 87 объектов — от уютных загородных домов до бизнес-центров
             класса А. Средний срок строительства — 8 месяцев. 95% клиентов обращаются к нам
             повторно или рекомендуют знакомым.
           </p>

@@ -29,7 +29,7 @@ export default function CustomCursor() {
     if (!isDesktop) return;
 
     const style = document.createElement("style");
-    style.textContent = `* { cursor: none !important; }`;
+    style.textContent = `* { cursor: none !important; } input, textarea, [contenteditable] { cursor: auto !important; }`;
     document.head.appendChild(style);
 
     const handleHover = (e: MouseEvent) => {
