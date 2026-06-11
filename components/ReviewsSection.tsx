@@ -54,6 +54,7 @@ export default function ReviewsSection() {
   const [isPaused, setIsPaused] = useState(false);
   const [isTouch, setIsTouch] = useState(false);
   const touchStartX = useRef(0);
+  const pauseTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   useEffect(() => {
     setIsTouch(
@@ -61,12 +62,29 @@ export default function ReviewsSection() {
     );
   }, []);
 
-  const next = useCallback(() => {
-    setCurrent((c) => (c + 1) % reviews.length);
+  const pauseForAWhile = useCallback(() => {
+    setIsPaused(true);
+    clearTimeout(pauseTimer.current);
+    pauseTimer.current = setTimeout(() => setIsPaused(false), 5000);
   }, []);
 
+  const next = useCallback(() => {
+    pauseForAWhile();
+    setCurrent((c) => (c + 1) % reviews.length);
+  }, [pauseForAWhile]);
+
   const prev = useCallback(() => {
+    pauseForAWhile();
     setCurrent((c) => (c - 1 + reviews.length) % reviews.length);
+  }, [pauseForAWhile]);
+
+  const goTo = useCallback((i: number) => {
+    pauseForAWhile();
+    setCurrent(i);
+  }, [pauseForAWhile]);
+
+  useEffect(() => {
+    return () => clearTimeout(pauseTimer.current);
   }, []);
 
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -101,7 +119,7 @@ export default function ReviewsSection() {
       >
         Отзывы клиентов
       </motion.h2>
-      <div className="relative min-h-[300px]">
+      <div className="relative min-h-[300px] overflow-hidden">
         <AnimatePresence mode="wait">
           <motion.div
             key={current}
@@ -159,7 +177,7 @@ export default function ReviewsSection() {
         {reviews.map((_, i) => (
           <button
             key={i}
-            onClick={() => setCurrent(i)}
+            onClick={() => goTo(i)}
             className={`w-2 h-2 rounded-full transition-all ${
               i === current ? "bg-gold w-6" : "bg-white/20"
             }`}

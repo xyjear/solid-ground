@@ -1,10 +1,15 @@
 "use client";
 
-import { useScroll, useTransform, motion } from "framer-motion";
+import { useLenis } from "lenis/react";
+import { useMotionValue, useTransform, motion } from "framer-motion";
 
 export default function ScrollProgressBar() {
-  const { scrollYProgress } = useScroll();
+  const scrollYProgress = useMotionValue(0);
   const scaleX = useTransform(scrollYProgress, [0, 1], [0, 1]);
+
+  useLenis(({ progress }: { progress: number }) => {
+    scrollYProgress.set(progress);
+  });
 
   return (
     <motion.div

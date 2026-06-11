@@ -33,7 +33,7 @@ export default function RootLayout({
       lang="ru"
       className={`${manrope.variable} ${outfit.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-dark text-white">
+      <body className="min-h-full flex flex-col bg-dark text-white overflow-x-hidden">
         <LenisProvider>
           <AnchorHandler />
           <CustomCursor />

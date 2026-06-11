@@ -36,7 +36,7 @@ function AnimatedPrice({ value }: { value: number }) {
   }, [value, count]);
 
   return (
-    <motion.span className="text-5xl md:text-6xl font-heading font-bold text-gold">
+    <motion.span className="text-3xl sm:text-5xl md:text-6xl font-heading font-bold text-gold">
       <motion.span>{rounded}</motion.span> ₽
     </motion.span>
   );
