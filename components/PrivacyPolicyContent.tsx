@@ -1,6 +1,6 @@
 export default function PrivacyPolicyContent() {
   return (
-    <div className="bg-dark-800 border border-white/10 rounded-xl p-8 md:p-12 text-white/80 text-sm leading-relaxed space-y-5 max-w-2xl mx-auto">
+    <div className="bg-dark-800 border border-white/10 rounded-xl p-5 md:p-12 text-white/80 text-sm leading-relaxed space-y-5 max-w-2xl mx-auto">
       <h2 className="text-2xl font-heading font-bold text-gold mb-6">
         Политика конфиденциальности
       </h2>

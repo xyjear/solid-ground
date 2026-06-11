@@ -83,7 +83,7 @@ const cardVariants = {
 
 export default function ServicesSection() {
   return (
-    <section id="services" className="py-24 px-4 max-w-6xl mx-auto">
+    <section id="services" className="py-16 md:py-24 px-4 max-w-6xl mx-auto">
       <motion.h2
         className="text-3xl md:text-5xl font-heading font-bold text-center bg-gradient-to-r from-gold-300 via-yellow-400 to-gold-500 bg-clip-text text-transparent mb-16"
         initial={{ opacity: 0, y: 30 }}

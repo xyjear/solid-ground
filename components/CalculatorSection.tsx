@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from "framer-motion";
 
 type HouseType = "одноэтажный" | "двухэтажный" | "с мансардой" | null;
 type Material = "кирпич" | "газоблок" | "дерево" | "каркас" | null;
@@ -82,7 +82,7 @@ export default function CalculatorSection() {
   };
 
   return (
-    <section id="calculator" className="py-24 px-4 max-w-4xl mx-auto">
+    <section id="calculator" className="py-16 md:py-24 px-4 max-w-4xl mx-auto">
       <motion.h2
         className="text-3xl md:text-5xl font-heading font-bold text-center bg-gradient-to-r from-gold-300 via-yellow-400 to-gold-500 bg-clip-text text-transparent mb-12"
         initial={{ opacity: 0, y: 30 }}
@@ -104,116 +104,142 @@ export default function CalculatorSection() {
       </div>
 
       <div className="bg-dark-800 border border-white/5 rounded-xl p-6 md:p-8">
-        {step === 1 && (
-          <div>
-            <h3 className="text-xl font-heading font-semibold text-white mb-6 text-center">
-              Выберите тип дома
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {houseTypes.map((t) => (
-                <button
-                  key={t.value}
-                  onClick={() => setHouseType(t.value)}
-                  className={`p-6 rounded-xl border text-left transition-all ${
-                    houseType === t.value
-                      ? "border-gold bg-gold/10"
-                      : "border-white/10 hover:border-gold/50"
-                  }`}
-                >
-                  <div className="text-lg font-heading font-semibold text-white mb-1">
-                    {t.label}
-                  </div>
-                  <div className="text-sm text-white/50">{t.desc}</div>
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {step === 2 && (
-          <div>
-            <h3 className="text-xl font-heading font-semibold text-white mb-6 text-center">
-              Площадь дома
-            </h3>
-            <div className="text-center">
-              <div className="text-5xl font-heading font-bold text-gold mb-4">
-                {area} м²
+        <AnimatePresence mode="wait">
+          {step === 1 && (
+            <motion.div
+              key="step1"
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 30 }}
+              transition={{ duration: 0.25 }}
+            >
+              <h3 className="text-xl font-heading font-semibold text-white mb-6 text-center">
+                Выберите тип дома
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {houseTypes.map((t) => (
+                  <button
+                    key={t.value}
+                    onClick={() => setHouseType(t.value)}
+                    className={`p-6 rounded-xl border text-left transition-all ${
+                      houseType === t.value
+                        ? "border-gold bg-gold/10"
+                        : "border-white/10 hover:border-gold/50"
+                    }`}
+                  >
+                    <div className="text-lg font-heading font-semibold text-white mb-1">
+                      {t.label}
+                    </div>
+                    <div className="text-sm text-white/50">{t.desc}</div>
+                  </button>
+                ))}
               </div>
-              <input
-                type="range"
-                min={50}
-                max={500}
-                step={10}
-                value={area}
-                onChange={(e) => setArea(Number(e.target.value))}
-                className="w-full max-w-md accent-gold"
-              />
-              <div className="flex justify-between max-w-md mx-auto text-sm text-white/40 mt-2">
-                <span>50 м²</span>
-                <span>500 м²</span>
+            </motion.div>
+          )}
+
+          {step === 2 && (
+            <motion.div
+              key="step2"
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 30 }}
+              transition={{ duration: 0.25 }}
+            >
+              <h3 className="text-xl font-heading font-semibold text-white mb-6 text-center">
+                Площадь дома
+              </h3>
+              <div className="text-center">
+                <div className="text-5xl font-heading font-bold text-gold mb-4">
+                  {area} м²
+                </div>
+                <input
+                  type="range"
+                  min={50}
+                  max={500}
+                  step={10}
+                  value={area}
+                  onChange={(e) => setArea(Number(e.target.value))}
+                  className="w-full max-w-md accent-gold"
+                />
+                <div className="flex justify-between max-w-md mx-auto text-sm text-white/40 mt-2">
+                  <span>50 м²</span>
+                  <span>500 м²</span>
+                </div>
               </div>
-            </div>
-          </div>
-        )}
+            </motion.div>
+          )}
 
-        {step === 3 && (
-          <div>
-            <h3 className="text-xl font-heading font-semibold text-white mb-6 text-center">
-              Выберите материал
-            </h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {materials.map((m) => (
-                <button
-                  key={m.value}
-                  onClick={() => setMaterial(m.value)}
-                  className={`p-6 rounded-xl border text-center transition-all ${
-                    material === m.value
-                      ? "border-gold bg-gold/10"
-                      : "border-white/10 hover:border-gold/50"
-                  }`}
-                >
-                  <div className="text-3xl mb-2">{m.icon}</div>
-                  <div className="text-sm font-heading font-semibold text-white">
-                    {m.label}
-                  </div>
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
+          {step === 3 && (
+            <motion.div
+              key="step3"
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 30 }}
+              transition={{ duration: 0.25 }}
+            >
+              <h3 className="text-xl font-heading font-semibold text-white mb-6 text-center">
+                Выберите материал
+              </h3>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {materials.map((m) => (
+                  <button
+                    key={m.value}
+                    onClick={() => setMaterial(m.value)}
+                    className={`p-6 rounded-xl border text-center transition-all ${
+                      material === m.value
+                        ? "border-gold bg-gold/10"
+                        : "border-white/10 hover:border-gold/50"
+                    }`}
+                  >
+                    <div className="text-3xl mb-2">{m.icon}</div>
+                    <div className="text-sm font-heading font-semibold text-white">
+                      {m.label}
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </motion.div>
+          )}
 
-        {step === 4 && (
-          <div>
-            <h3 className="text-xl font-heading font-semibold text-white mb-6 text-center">
-              Дополнительные опции
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-md mx-auto">
-              {options.map((opt) => (
-                <label
-                  key={opt.value}
-                  className={`flex items-center gap-3 p-4 rounded-xl border cursor-pointer transition-all ${
-                    selectedOptions.includes(opt.value)
-                      ? "border-gold bg-gold/10"
-                      : "border-white/10 hover:border-gold/50"
-                  }`}
-                >
-                  <input
-                    type="checkbox"
-                    checked={selectedOptions.includes(opt.value)}
-                    onChange={() => toggleOption(opt.value)}
-                    className="accent-gold"
-                  />
-                  <span className="text-white text-sm">{opt.label}</span>
-                </label>
-              ))}
-            </div>
-          </div>
-        )}
+          {step === 4 && (
+            <motion.div
+              key="step4"
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 30 }}
+              transition={{ duration: 0.25 }}
+            >
+              <h3 className="text-xl font-heading font-semibold text-white mb-6 text-center">
+                Дополнительные опции
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-md mx-auto">
+                {options.map((opt) => (
+                  <label
+                    key={opt.value}
+                    className={`flex items-center gap-3 p-4 rounded-xl border cursor-pointer transition-all ${
+                      selectedOptions.includes(opt.value)
+                        ? "border-gold bg-gold/10"
+                        : "border-white/10 hover:border-gold/50"
+                    }`}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={selectedOptions.includes(opt.value)}
+                      onChange={() => toggleOption(opt.value)}
+                      className="accent-gold"
+                    />
+                    <span className="text-white text-sm">{opt.label}</span>
+                  </label>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
-        <div className="flex justify-between mt-8">
+        <div className="flex flex-col sm:flex-row justify-between mt-8 gap-3">
           <button
             onClick={() => setStep((s) => Math.max(1, s - 1))}
-            className={`px-6 py-3 rounded-lg border border-white/10 text-white/60 transition-all hover:border-gold/50 hover:text-gold ${
+            className={`px-6 py-3 rounded-lg border border-white/10 text-white/60 transition-all hover:border-gold/50 hover:text-gold sm:self-start ${
               step === 1 ? "invisible" : ""
             }`}
           >
@@ -222,14 +248,14 @@ export default function CalculatorSection() {
           {step < totalSteps ? (
             <button
               onClick={() => setStep((s) => s + 1)}
-              className="px-8 py-3 bg-gold text-dark font-semibold rounded-lg transition-all hover:scale-105"
+              className="px-8 py-3 bg-gold text-dark font-semibold rounded-lg transition-all hover:scale-105 sm:self-end"
             >
               Далее
             </button>
           ) : (
             <button
               onClick={scrollToContact}
-              className="px-8 py-3 bg-gold text-dark font-semibold rounded-lg transition-all hover:scale-105"
+              className="px-8 py-3 bg-gold text-dark font-semibold rounded-lg transition-all hover:scale-105 w-full sm:w-auto"
             >
               Отправить заявку
             </button>
@@ -240,11 +266,23 @@ export default function CalculatorSection() {
       <div ref={resultRef} className="mt-10 text-center bg-dark-800 border border-white/5 rounded-xl p-8">
         <h3 className="text-lg text-white/60 mb-2">Ориентировочная стоимость</h3>
         <AnimatedPrice value={price} />
-        <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-white/50 text-left max-w-lg mx-auto">
-          <div>Площадь: {area} м²</div>
-          <div>Тип: {houseType || "—"}</div>
-          <div>Материал: {material || "—"}</div>
-          <div>Опции: {selectedOptions.length || "—"}</div>
+        <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4 text-sm max-w-lg mx-auto">
+          <div className="text-center">
+            <div className="text-white/40 mb-1">Площадь</div>
+            <div className="text-white font-medium">{area} м²</div>
+          </div>
+          <div className="text-center">
+            <div className="text-white/40 mb-1">Тип</div>
+            <div className="text-white font-medium">{houseType || "—"}</div>
+          </div>
+          <div className="text-center">
+            <div className="text-white/40 mb-1">Материал</div>
+            <div className="text-white font-medium">{material || "—"}</div>
+          </div>
+          <div className="text-center">
+            <div className="text-white/40 mb-1">Опции</div>
+            <div className="text-white font-medium">{selectedOptions.length || "—"}</div>
+          </div>
         </div>
       </div>
     </section>

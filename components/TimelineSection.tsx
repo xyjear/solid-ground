@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
 const stages = [
@@ -92,14 +92,22 @@ function StageCard({
 
 export default function TimelineSection() {
   const ref = useRef<HTMLDivElement>(null);
+  const [reachedEnd, setReachedEnd] = useState(false);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start center", "end center"],
   });
   const lineHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
+  useEffect(() => {
+    const unsubscribe = scrollYProgress.on("change", (v) => {
+      if (v >= 1) setReachedEnd(true);
+    });
+    return unsubscribe;
+  }, [scrollYProgress]);
+
   return (
-    <section id="timeline" className="py-24 px-4" ref={ref}>
+    <section id="timeline" className="py-16 md:py-24 px-4" ref={ref}>
       <motion.h2
         className="text-3xl md:text-5xl font-heading font-bold text-center bg-gradient-to-r from-gold-300 via-yellow-400 to-gold-500 bg-clip-text text-transparent mb-16"
         initial={{ opacity: 0, y: 30 }}
@@ -112,7 +120,7 @@ export default function TimelineSection() {
         <div className="hidden md:block absolute left-1/2 top-[80px] bottom-[80px] w-0.5 -translate-x-1/2 bg-white/10">
           <motion.div
             className="w-full bg-gold origin-top"
-            style={{ height: lineHeight }}
+            style={reachedEnd ? { height: "100%" } : { height: lineHeight }}
           />
         </div>
         <div className="space-y-12 md:space-y-16">

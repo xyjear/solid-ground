@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 
@@ -52,6 +52,12 @@ function Stars() {
 export default function ReviewsSection() {
   const [current, setCurrent] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [isTouch, setIsTouch] = useState(false);
+  const touchStartX = useRef(0);
+
+  useEffect(() => {
+    setIsTouch("ontouchstart" in window || navigator.maxTouchPoints > 0);
+  }, []);
 
   const next = useCallback(() => {
     setCurrent((c) => (c + 1) % reviews.length);
@@ -60,6 +66,17 @@ export default function ReviewsSection() {
   const prev = useCallback(() => {
     setCurrent((c) => (c - 1 + reviews.length) % reviews.length);
   }, []);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    const diff = touchStartX.current - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) {
+      diff > 0 ? next() : prev();
+    }
+  };
 
   useEffect(() => {
     if (isPaused) return;
@@ -70,7 +87,7 @@ export default function ReviewsSection() {
   return (
     <section
       id="reviews"
-      className="py-24 px-4 max-w-4xl mx-auto"
+      className="py-16 md:py-24 px-4 max-w-4xl mx-auto"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
@@ -86,11 +103,13 @@ export default function ReviewsSection() {
         <AnimatePresence mode="wait">
           <motion.div
             key={current}
-            className="bg-dark-800 border border-white/5 rounded-xl p-8 md:p-10 text-center"
+            className="bg-dark-800 border border-white/5 rounded-xl p-6 md:p-10 text-center"
             initial={{ opacity: 0, x: 60 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -60 }}
             transition={{ duration: 0.4 }}
+            onTouchStart={isTouch ? handleTouchStart : undefined}
+            onTouchEnd={isTouch ? handleTouchEnd : undefined}
           >
             <div className="w-16 h-16 rounded-full overflow-hidden mx-auto mb-4 border-2 border-gold">
               <Image
@@ -113,22 +132,26 @@ export default function ReviewsSection() {
             </p>
           </motion.div>
         </AnimatePresence>
-        <button
-          onClick={prev}
-          className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-12 w-10 h-10 flex items-center justify-center rounded-full border border-white/10 text-white/40 hover:border-gold hover:text-gold transition-all"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-5 h-5">
-            <path d="M15 18l-6-6 6-6" />
-          </svg>
-        </button>
-        <button
-          onClick={next}
-          className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-12 w-10 h-10 flex items-center justify-center rounded-full border border-white/10 text-white/40 hover:border-gold hover:text-gold transition-all"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-5 h-5">
-            <path d="M9 18l6-6-6-6" />
-          </svg>
-        </button>
+        {!isTouch && (
+          <>
+            <button
+              onClick={prev}
+              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-12 w-10 h-10 flex items-center justify-center rounded-full border border-white/10 text-white/40 hover:border-gold hover:text-gold transition-all"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-5 h-5">
+                <path d="M15 18l-6-6 6-6" />
+              </svg>
+            </button>
+            <button
+              onClick={next}
+              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-12 w-10 h-10 flex items-center justify-center rounded-full border border-white/10 text-white/40 hover:border-gold hover:text-gold transition-all"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-5 h-5">
+                <path d="M9 18l6-6-6-6" />
+              </svg>
+            </button>
+          </>
+        )}
       </div>
       <div className="flex justify-center gap-2 mt-8">
         {reviews.map((_, i) => (

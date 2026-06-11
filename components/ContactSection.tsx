@@ -89,7 +89,7 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contact" className="py-24 px-4 max-w-6xl mx-auto">
+    <section id="contact" className="py-16 md:py-24 px-4 max-w-6xl mx-auto">
       <motion.h2
         className="text-3xl md:text-5xl font-heading font-bold text-center bg-gradient-to-r from-gold-300 via-yellow-400 to-gold-500 bg-clip-text text-transparent mb-16"
         initial={{ opacity: 0, y: 30 }}
@@ -234,6 +234,7 @@ export default function ContactSection() {
                   <a
                     key={s.name}
                     href={s.href}
+                    onClick={(e) => e.preventDefault()}
                     className="w-10 h-10 flex items-center justify-center rounded-lg border border-white/10 text-white/40 hover:border-gold hover:text-gold transition-all"
                     title={s.name}
                   >

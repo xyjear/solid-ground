@@ -2,7 +2,7 @@
 
 import { useState, useRef } from "react";
 import Image from "next/image";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import Modal from "./Modal";
 
 const categories = ["Все", "Дома", "Коттеджи", "Коммерция"] as const;
@@ -15,6 +15,9 @@ const projects = [
     area: "235 м²",
     type: "Дома" as Category,
     img: "https://picsum.photos/seed/house1/600/400",
+    description:
+      "Двухэтажный дом из газоблока с панорамным остеклением и выходом на террасу. Монолитный фундамент, кровля из металлочерепицы. Выполнена внутренняя отделка, проведено отопление и водоснабжение. Участок — 12 соток, кадастровый номер 50:01:0000000:123.",
+    highlights: ["Панорамные окна 6×2.5 м", "Терраса 40 м²", "Газоблок D500"],
   },
   {
     id: 2,
@@ -22,6 +25,9 @@ const projects = [
     area: "320 м²",
     type: "Коттеджи" as Category,
     img: "https://picsum.photos/seed/cottage1/600/400",
+    description:
+      "Кирпичный коттедж в окружении соснового леса. Цокольный этаж с техническими помещениями, первый этаж — кухня-гостиная 80 м² с камином, второй этаж — четыре спальни. Фасад облицован клинкерной плиткой. Придомовая территория — ландшафтный дизайн, мощение гранитом.",
+    highlights: ["Камин с порталом из мрамора", "Клинкерный фасад", "Цокольный этаж 80 м²"],
   },
   {
     id: 3,
@@ -29,6 +35,9 @@ const projects = [
     area: "1 200 м²",
     type: "Коммерция" as Category,
     img: "https://picsum.photos/seed/office1/600/400",
+    description:
+      "Трёхэтажное офисное здание класса B+ с подземным паркингом на 20 машин. Каркас из монолитного железобетона, навесной вентилируемый фасад. Открытая планировка этажей, панорамное остекление, система климат-контроля. Объект сдан в 2024 году.",
+    highlights: ["Подземный паркинг 20 м/м", "Вентилируемый фасад", "Климат-контроль"],
   },
   {
     id: 4,
@@ -36,6 +45,9 @@ const projects = [
     area: "185 м²",
     type: "Дома" as Category,
     img: "https://picsum.photos/seed/house2/600/400",
+    description:
+      "Одноэтажный дом из клеёного бруса 200×200 мм для постоянного проживания. Тёплый чердак, открытая веранда, терраса с барбекю. Инженерные системы — автономное отопление, септик. Срок строительства — 7 месяцев. Проект реализован в Московской области, Рузский район.",
+    highlights: ["Клеёный брус 200 мм", "Автономное отопление", "Срок 7 месяцев"],
   },
   {
     id: 5,
@@ -43,6 +55,9 @@ const projects = [
     area: "280 м²",
     type: "Коттеджи" as Category,
     img: "https://picsum.photos/seed/cottage2/600/400",
+    description:
+      "Головной дом в коттеджном посёлке — образцовый проект застройки. Каркасная технология с утеплением 250 мм, финишная отделка — штукатурный фасад. Внутри: гостиная с вторым светом, кабинет, мастер-спальня с гардеробной. Энергоэффективность класса А.",
+    highlights: ["Второй свет 6 м высота", "Энергоэффективность А", "Каркас 250 мм утепление"],
   },
   {
     id: 6,
@@ -50,6 +65,9 @@ const projects = [
     area: "3 500 м²",
     type: "Коммерция" as Category,
     img: "https://picsum.photos/seed/commercial1/600/400",
+    description:
+      "Двухэтажный торговый центр с арендными помещениями от 20 до 500 м². Сборный железобетонный каркас, витражное остекление витрин, парковка на 80 машин. Объект полностью сдан в аренду. Пропускная способность — до 1 500 человек в день.",
+    highlights: ["Витражное остекление", "Парковка 80 м/м", "Сдан в аренду 100%"],
   },
 ];
 
@@ -116,7 +134,7 @@ export default function PortfolioSection() {
   };
 
   return (
-    <section id="portfolio" className="py-24 px-4 max-w-6xl mx-auto">
+    <section id="portfolio" className="py-16 md:py-24 px-4 max-w-6xl mx-auto">
       <motion.h2
         className="text-3xl md:text-5xl font-heading font-bold text-center bg-gradient-to-r from-gold-300 via-yellow-400 to-gold-500 bg-clip-text text-transparent mb-8"
         initial={{ opacity: 0, y: 30 }}
@@ -144,18 +162,28 @@ export default function PortfolioSection() {
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
         layout
       >
-        {filtered.map((project) => (
-          <ProjectCard
-            key={project.id}
-            project={project}
-            onClick={() => handleOpen(project)}
-          />
-        ))}
+        <AnimatePresence mode="popLayout">
+          {filtered.map((project) => (
+            <motion.div
+              key={project.id}
+              layout
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.3 }}
+            >
+              <ProjectCard
+                project={project}
+                onClick={() => handleOpen(project)}
+              />
+            </motion.div>
+          ))}
+        </AnimatePresence>
       </motion.div>
       <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
         {selected && (
           <div className="bg-dark-800 rounded-xl overflow-hidden">
-            <div className="relative h-80">
+            <div className="relative h-64 md:h-80">
               <Image
                 src={selected.img}
                 alt={selected.title}
@@ -163,18 +191,27 @@ export default function PortfolioSection() {
                 className="object-cover"
               />
             </div>
-            <div className="p-6">
-              <h3 className="text-2xl font-heading font-bold text-white mb-2">
+            <div className="p-6 md:p-8 space-y-5">
+              <h3 className="text-2xl md:text-3xl font-heading font-bold text-white">
                 {selected.title}
               </h3>
-              <div className="flex gap-4 text-white/60 text-sm mb-4">
+              <div className="flex flex-wrap gap-4 text-white/60 text-sm">
                 <span>Площадь: {selected.area}</span>
                 <span className="text-gold">{selected.type}</span>
               </div>
               <p className="text-white/50 leading-relaxed">
-                Подробная информация об объекте. Фотографии, планировки и
-                используемые материалы — по запросу.
+                {selected.description}
               </p>
+              <div className="flex flex-wrap gap-2">
+                {selected.highlights.map((h, i) => (
+                  <span
+                    key={i}
+                    className="px-3 py-1 bg-gold/10 border border-gold/20 rounded-md text-xs text-gold"
+                  >
+                    {h}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
         )}
