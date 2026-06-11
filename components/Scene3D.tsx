@@ -48,7 +48,6 @@ export default function Scene3D() {
   const [bp, setBp] = useState<"desktop" | "tablet" | "mobile">("desktop");
 
   useEffect(() => {
-    const mq = window.matchMedia("(max-width: 767px), (max-width: 1023px)");
     const update = () => {
       const w = window.innerWidth;
       if (w < 768) setBp("mobile");
@@ -56,8 +55,8 @@ export default function Scene3D() {
       else setBp("desktop");
     };
     update();
-    mq.addEventListener("change", update);
-    return () => mq.removeEventListener("change", update);
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
   }, []);
 
   const positions =
