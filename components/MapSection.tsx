@@ -16,7 +16,7 @@ const regions = [
 
 const cityTags = [
   { name: "Москва", objects: 28 },
-  { name: "СПб", objects: 15 },
+  { name: "Санкт-Петербург", objects: 15 },
   { name: "Краснодар", objects: 12 },
   { name: "Казань", objects: 9 },
   { name: "Екатеринбург", objects: 7 },

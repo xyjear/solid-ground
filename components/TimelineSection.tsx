@@ -62,7 +62,7 @@ function StageCard({
   const isLeft = index % 2 === 0;
   return (
     <div className="flex items-center justify-center md:justify-normal gap-8 relative">
-      <div className={`flex-1 ${isLeft ? "md:text-right" : "md:text-left"} ${isLeft ? "md:pr-8" : "md:pl-8"} ${isLeft ? "md:order-1" : "md:order-3"}`}>
+      <div className={`flex-1 ${isLeft ? "md:text-right md:pr-10" : "md:text-left md:pl-10"}`}>
         <motion.div
           className="bg-dark-800 border border-white/5 rounded-xl p-6"
           initial={{ opacity: 0, x: isLeft ? -100 : 100 }}
@@ -79,10 +79,10 @@ function StageCard({
           </p>
         </motion.div>
       </div>
-      <div className="hidden md:flex order-2 relative z-10 w-10 h-10 rounded-full bg-dark border-2 border-gold items-center justify-center shrink-0">
+      <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 z-10 w-10 h-10 rounded-full bg-dark border-2 border-gold items-center justify-center shrink-0">
         <div className="w-2 h-2 rounded-full bg-gold" />
       </div>
-      <div className="flex-1 md:order-3 hidden md:block" />
+      <div className="flex-1 hidden md:block" />
     </div>
   );
 }

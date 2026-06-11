@@ -1,13 +1,21 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import dynamic from "next/dynamic";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 const Scene3D = dynamic(() => import("@/components/Scene3D"), { ssr: false });
 
 export default function HeroSection() {
   const [isMobile, setIsMobile] = useState(true);
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"],
+  });
+  const buildingProgress = useTransform(scrollYProgress, [0, 0.8], [0, 1]);
+  const leftHeight = useTransform(buildingProgress, [0, 1], ["0%", "100%"]);
+  const rightHeight = useTransform(buildingProgress, [0, 1], ["0%", "100%"]);
 
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 767px)");
@@ -18,17 +26,41 @@ export default function HeroSection() {
   }, []);
 
   return (
-    <section className="relative h-dvh flex items-center justify-center overflow-hidden">
+    <section ref={ref} className="relative h-dvh flex items-center justify-center overflow-hidden">
       {!isMobile && <Scene3D />}
       <div className="absolute inset-0 bg-radial from-gold/10 to-transparent pointer-events-none" />
+
+      <motion.div
+        className="absolute left-0 bottom-0 w-1.5 md:w-2 origin-bottom bg-gradient-to-t from-gold/40 to-transparent"
+        style={{ height: leftHeight }}
+      />
+      <motion.div
+        className="absolute left-3 md:left-6 bottom-0 w-1 md:w-1.5 origin-bottom bg-gradient-to-t from-gold/20 to-transparent"
+        style={{ height: useTransform(buildingProgress, [0, 1], ["0%", "60%"]) }}
+      />
+      <motion.div
+        className="absolute right-0 bottom-0 w-1.5 md:w-2 origin-bottom bg-gradient-to-t from-gold/40 to-transparent"
+        style={{ height: rightHeight }}
+      />
+      <motion.div
+        className="absolute right-3 md:right-6 bottom-0 w-1 md:w-1.5 origin-bottom bg-gradient-to-t from-gold/20 to-transparent"
+        style={{ height: useTransform(buildingProgress, [0, 1], ["0%", "70%"]) }}
+      />
+
       <div className="relative z-10 flex flex-col items-center text-center px-4 max-w-4xl">
         <motion.h1
-          className="text-5xl md:text-7xl font-heading font-bold bg-gradient-to-r from-gold-300 via-yellow-400 to-gold-500 bg-clip-text text-transparent leading-tight"
+          className="text-5xl md:text-7xl font-heading font-bold leading-tight"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.5 }}
         >
-          SolidGround — строим надёжно
+          <span className="bg-gradient-to-r from-gold-300 via-yellow-400 to-gold-500 bg-clip-text text-transparent">
+            SolidGround
+          </span>
+          <br />
+          <span className="bg-gradient-to-r from-gold-300 via-yellow-400 to-gold-500 bg-clip-text text-transparent">
+            строим надёжно
+          </span>
         </motion.h1>
         <motion.p
           className="mt-6 text-lg md:text-xl text-white/70 max-w-2xl"

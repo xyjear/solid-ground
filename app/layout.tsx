@@ -19,6 +19,7 @@ export const metadata: Metadata = {
   title: "SolidGround — строительная компания",
   description:
     "Проектирование и строительство домов, коттеджей и коммерческих объектов под ключ",
+  icons: { icon: "/favicon.svg" },
 };
 
 export default function RootLayout({
