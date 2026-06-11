@@ -119,39 +119,41 @@ export default function ReviewsSection() {
       >
         Отзывы клиентов
       </motion.h2>
-      <div className="relative min-h-[300px] overflow-hidden">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={current}
-            className="bg-dark-800 border border-white/5 rounded-xl p-6 md:p-10 text-center"
-            initial={{ opacity: 0, x: 60 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -60 }}
-            transition={{ duration: 0.4 }}
-            onTouchStart={isTouch ? handleTouchStart : undefined}
-            onTouchEnd={isTouch ? handleTouchEnd : undefined}
-          >
-            <div className="w-16 h-16 rounded-full overflow-hidden mx-auto mb-4 border-2 border-gold">
-              <Image
-                src={reviews[current].avatar}
-                alt={reviews[current].name}
-                width={64}
-                height={64}
-                className="object-cover"
-              />
-            </div>
-            <div className="flex justify-center mb-3">
-              <Stars />
-            </div>
-            <h3 className="text-lg font-heading font-semibold text-white">
-              {reviews[current].name}
-            </h3>
-            <p className="text-gold text-sm mb-4">{reviews[current].project}</p>
-            <p className="text-white/60 leading-relaxed max-w-xl mx-auto">
-              {reviews[current].text}
-            </p>
-          </motion.div>
-        </AnimatePresence>
+      <div className="relative min-h-[300px]">
+        <div className="overflow-hidden rounded-xl">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={current}
+              className="bg-dark-800 border border-white/5 p-6 md:p-10 text-center"
+              initial={{ opacity: 0, x: 60 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -60 }}
+              transition={{ duration: 0.4 }}
+              onTouchStart={isTouch ? handleTouchStart : undefined}
+              onTouchEnd={isTouch ? handleTouchEnd : undefined}
+            >
+              <div className="w-16 h-16 rounded-full overflow-hidden mx-auto mb-4 border-2 border-gold">
+                <Image
+                  src={reviews[current].avatar}
+                  alt={reviews[current].name}
+                  width={64}
+                  height={64}
+                  className="object-cover"
+                />
+              </div>
+              <div className="flex justify-center mb-3">
+                <Stars />
+              </div>
+              <h3 className="text-lg font-heading font-semibold text-white">
+                {reviews[current].name}
+              </h3>
+              <p className="text-gold text-sm mb-4">{reviews[current].project}</p>
+              <p className="text-white/60 leading-relaxed max-w-xl mx-auto">
+                {reviews[current].text}
+              </p>
+            </motion.div>
+          </AnimatePresence>
+        </div>
         {!isTouch && (
           <>
             <button

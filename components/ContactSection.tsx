@@ -56,10 +56,31 @@ export default function ContactSection() {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
   const [showPrivacy, setShowPrivacy] = useState(false);
+  const [validation, setValidation] = useState<Record<string, string>>({});
+
+  const validate = () => {
+    if (form.name.length > 100) {
+      setError("Имя не может быть длиннее 100 символов");
+      return false;
+    }
+    const v: Record<string, string> = {};
+    const phoneClean = form.phone.replace(/[\s\-()]/g, "");
+    if (!/^(\+7|8)\d{10}$/.test(phoneClean)) {
+      v.phone = "Введите номер в формате +7 (999) 999-99-99";
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
+      v.email = "Введите корректный email";
+    }
+    setValidation(v);
+    return !v.phone && !v.email;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+    setValidation({ phone: "", email: "" });
+
+    if (!validate()) return;
 
     if (!consent) {
       setError("Необходимо согласие на обработку данных");
@@ -104,27 +125,34 @@ export default function ContactSection() {
           className="flex-1 bg-dark-800 border border-white/5 rounded-xl p-8 space-y-6"
         >
           {(["name", "phone", "email"] as const).map((field) => (
-            <div key={field} className="relative">
-              <input
-                id={field}
-                type={field === "email" ? "email" : "text"}
-                value={form[field]}
-                onChange={(e) =>
-                  setForm({ ...form, [field]: e.target.value })
-                }
-                className="w-full bg-transparent border-b border-white/20 pb-2 pt-6 text-white outline-none focus:border-gold focus-visible:ring-2 focus-visible:ring-gold/50 focus-visible:rounded transition-colors peer"
-                required
-                aria-required="true"
-                placeholder=" "
-              />
-              <label
-                htmlFor={field}
-                className="absolute left-0 top-4 text-white/40 text-sm transition-all peer-focus:top-0 peer-focus:text-xs peer-focus:text-gold peer-[:not(:placeholder-shown)]:top-0 peer-[:not(:placeholder-shown)]:text-xs"
-              >
-                {field === "name" ? "Имя"
-                  : field === "phone" ? "Телефон"
-                  : "Email"}
-              </label>
+            <div key={field}>
+              <div className="relative">
+                <input
+                  id={field}
+                  type={field === "email" ? "email" : "text"}
+                  value={form[field]}
+                  onChange={(e) => {
+                    setForm({ ...form, [field]: e.target.value });
+                    if (validation[field]) setValidation({ ...validation, [field]: "" });
+                  }}
+                  maxLength={field === "name" ? 100 : undefined}
+                  className="w-full bg-transparent border-b border-white/20 pb-2 pt-6 text-white outline-none focus:border-gold focus-visible:ring-2 focus-visible:ring-gold/50 focus-visible:rounded transition-colors peer"
+                  required
+                  aria-required="true"
+                  placeholder=" "
+                />
+                <label
+                  htmlFor={field}
+                  className="absolute left-0 top-4 text-white/40 text-sm transition-all peer-focus:top-0 peer-focus:text-xs peer-focus:text-gold peer-[:not(:placeholder-shown)]:top-0 peer-[:not(:placeholder-shown)]:text-xs"
+                >
+                  {field === "name" ? "Имя"
+                    : field === "phone" ? "Телефон"
+                    : "Email"}
+                </label>
+              </div>
+              {validation[field] && (
+                <p className="text-red-400 text-xs mt-1">{validation[field]}</p>
+              )}
             </div>
           ))}
           <div className="relative">
