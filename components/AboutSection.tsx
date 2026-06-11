@@ -16,7 +16,7 @@ export default function AboutSection() {
   const [modalOpen, setModalOpen] = useState(false);
 
   return (
-    <section id="about" className="py-16 md:py-24 px-4 max-w-6xl mx-auto">
+    <section id="about" className="py-16 md:py-24 px-4 max-w-6xl mx-auto overflow-x-hidden">
       <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
         <div className="bg-dark-800 p-5 md:p-8 rounded-xl max-w-2xl mx-auto space-y-6">
           <h3 className="text-2xl font-heading font-bold text-gold">О компании SolidGround</h3>
