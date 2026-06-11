@@ -6,6 +6,7 @@ import { motion, useMotionValue, useSpring } from "framer-motion";
 export default function CustomCursor() {
   const [isDesktop, setIsDesktop] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
+  const [isOnInput, setIsOnInput] = useState(false);
   const mouseX = useMotionValue(-100);
   const mouseY = useMotionValue(-100);
   const springX = useSpring(mouseX, { stiffness: 300, damping: 30 });
@@ -34,8 +35,10 @@ export default function CustomCursor() {
 
     const handleHover = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
-      const isCTA = target.closest("a, button, [role='button'], input, textarea, select");
-      setIsHovering(!!isCTA);
+      const inInput = !!target.closest("input, textarea, [contenteditable]");
+      const isCTA = target.closest("a, button, [role='button'], select");
+      setIsOnInput(inInput);
+      setIsHovering(!!isCTA && !inInput);
     };
 
     window.addEventListener("mouseover", handleHover);
@@ -56,6 +59,7 @@ export default function CustomCursor() {
           y: springY,
           translateX: "-50%",
           translateY: "-50%",
+          opacity: isOnInput ? 0 : 1,
         }}
         animate={{ scale: isHovering ? 1.8 : 1 }}
       />
@@ -66,6 +70,7 @@ export default function CustomCursor() {
           y: mouseY,
           translateX: "-50%",
           translateY: "-50%",
+          opacity: isOnInput ? 0 : 1,
         }}
         animate={{ scale: isHovering ? 3.5 : 1 }}
       />

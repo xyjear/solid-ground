@@ -132,14 +132,29 @@ export default function ContactSection() {
                   type={field === "email" ? "email" : "text"}
                   value={form[field]}
                   onChange={(e) => {
-                    setForm({ ...form, [field]: e.target.value });
+                    if (field === "phone") {
+                      const raw = e.target.value.replace(/\D/g, "");
+                      const clean =
+                        raw.startsWith("7") || raw.startsWith("8")
+                          ? raw.slice(1, 11)
+                          : raw.slice(0, 10);
+                      let masked = "+7";
+                      if (clean.length > 0) masked += ` (${clean.slice(0, 3)}`;
+                      if (clean.length >= 4) masked += `) ${clean.slice(3, 6)}`;
+                      if (clean.length > 6) masked += `-${clean.slice(6, 8)}`;
+                      if (clean.length > 8) masked += `-${clean.slice(8, 10)}`;
+                      setForm({ ...form, phone: masked });
+                    } else {
+                      setForm({ ...form, [field]: e.target.value });
+                    }
                     if (validation[field]) setValidation({ ...validation, [field]: "" });
                   }}
-                  maxLength={field === "name" ? 100 : undefined}
+                  maxLength={field === "phone" ? 18 : field === "name" ? 100 : undefined}
                   className="w-full bg-transparent border-b border-white/20 pb-2 pt-6 text-white outline-none focus:border-gold focus-visible:ring-2 focus-visible:ring-gold/50 focus-visible:rounded transition-colors peer"
                   required
                   aria-required="true"
                   placeholder=" "
+                  autoComplete={field === "phone" ? "tel" : field === "email" ? "email" : "name"}
                 />
                 <label
                   htmlFor={field}

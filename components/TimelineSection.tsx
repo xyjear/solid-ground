@@ -107,7 +107,7 @@ export default function TimelineSection() {
   }, [scrollYProgress]);
 
   return (
-    <section id="timeline" className="py-16 md:py-24 px-4" ref={ref}>
+    <section id="timeline" className="py-16 md:py-24 px-4 overflow-x-hidden" ref={ref}>
       <motion.h2
         className="text-3xl md:text-5xl font-heading font-bold text-center bg-gradient-to-r from-gold-300 via-yellow-400 to-gold-500 bg-clip-text text-transparent mb-16"
         initial={{ opacity: 0, y: 30 }}
