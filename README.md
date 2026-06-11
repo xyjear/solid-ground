@@ -113,7 +113,7 @@ npm run build
 
 ## Изображения
 
-Плейсхолдеры проектов — [picsum.photos](https://picsum.photos).
+Изображения проектов — [Unsplash](https://unsplash.com).
 
 ## Лицензия
 
