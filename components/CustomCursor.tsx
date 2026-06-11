@@ -56,8 +56,8 @@ export default function CustomCursor() {
           y: springY,
           translateX: "-50%",
           translateY: "-50%",
-          scale: isHovering ? 1.5 : 1,
         }}
+        animate={{ scale: isHovering ? 1.8 : 1 }}
       />
       <motion.div
         className="fixed top-0 left-0 w-1.5 h-1.5 rounded-full bg-gold pointer-events-none z-[9999]"
@@ -67,7 +67,7 @@ export default function CustomCursor() {
           translateX: "-50%",
           translateY: "-50%",
         }}
-        animate={{ scale: isHovering ? 2.5 : 1 }}
+        animate={{ scale: isHovering ? 3.5 : 1 }}
       />
     </>
   );

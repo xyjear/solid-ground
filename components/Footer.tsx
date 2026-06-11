@@ -1,3 +1,5 @@
+"use client";
+
 export default function Footer() {
   return (
     <footer className="border-t border-white/10 py-10 px-4">
@@ -23,9 +25,9 @@ export default function Footer() {
           <a href="#contact" className="text-white/50 hover:text-gold transition-colors">
             Контакты
           </a>
-          <a href="#" className="text-white/30 hover:text-gold transition-colors">
+          <button onClick={(e) => e.preventDefault()} className="bg-transparent border-none text-white/30 hover:text-gold transition-colors cursor-pointer">
             Политика конфиденциальности
-          </a>
+          </button>
         </nav>
       </div>
     </footer>

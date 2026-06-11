@@ -7,7 +7,9 @@ const stages = [
   {
     icon: (
       <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-8 h-8 text-gold">
-        <path d="M12 3v3m0 0l3-3m-3 3L9 3m3 3v3" />
+        <rect x="3" y="12" width="18" height="9" rx="1" />
+        <path d="M7 12V8a2 2 0 012-2h6a2 2 0 012 2v4" />
+        <line x1="12" y1="6" x2="12" y2="3" />
       </svg>
     ),
     title: "Фундамент",
@@ -106,7 +108,7 @@ export default function TimelineSection() {
         Как мы строим
       </motion.h2>
       <div className="relative max-w-4xl mx-auto">
-        <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-0.5 -translate-x-1/2 bg-white/10">
+        <div className="hidden md:block absolute left-1/2 top-[60px] bottom-[60px] w-0.5 -translate-x-1/2 bg-white/10">
           <motion.div
             className="w-full bg-gold origin-top"
             style={{ height: lineHeight }}

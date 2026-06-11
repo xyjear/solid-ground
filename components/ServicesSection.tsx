@@ -16,7 +16,10 @@ const services = [
   {
     icon: (
       <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-10 h-10 text-gold">
-        <path d="M12 3v3m0 0l3-3m-3 3L9 3m3 3v3m4.5-1.5L17 7.5m-2 2l2-2M12 12l-2-2m2 2l-2 2m2-2v3" />
+        <rect x="3" y="11" width="18" height="10" rx="1.5" />
+        <path d="M7 11V7a2 2 0 012-2h6a2 2 0 012 2v4" />
+        <line x1="12" y1="5" x2="12" y2="2" />
+        <line x1="3" y1="16" x2="21" y2="16" />
       </svg>
     ),
     title: "Фундаментные работы",

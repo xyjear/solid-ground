@@ -20,10 +20,10 @@ const tabletPositions: [number, number, number][] = [
 ];
 
 const mobilePositions: [number, number, number][] = [
-  [-2.5, 1.5, -4],
-  [2.5, -0.5, -3.5],
-  [-2, -1.5, -4],
-  [2, 1.5, -4],
+  [-1.2, 1.5, -3],
+  [1.2, -0.8, -2.5],
+  [-1, -1.8, -3],
+  [1, 1.8, -2.5],
 ];
 
 const geometries = [
