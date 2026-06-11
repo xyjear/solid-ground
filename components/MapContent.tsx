@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -38,6 +38,29 @@ function FlyToActive({ activeRegion }: { activeRegion: string | null }) {
       map.flyTo([55, 83], 4, { duration: 1.2 });
     }
   }, [activeRegion, map]);
+  return null;
+}
+
+function CtrlScrollZoom() {
+  const map = useMap();
+
+  useEffect(() => {
+    const container = map.getContainer();
+
+    const handleWheel = (e: WheelEvent) => {
+      if (e.ctrlKey || e.metaKey) {
+        e.preventDefault();
+        const delta = e.deltaY > 0 ? -1 : 1;
+        map.setZoom(map.getZoom() + delta, { animate: true });
+      } else {
+        e.preventDefault();
+      }
+    };
+
+    container.addEventListener("wheel", handleWheel, { passive: false });
+    return () => container.removeEventListener("wheel", handleWheel);
+  }, [map]);
+
   return null;
 }
 
@@ -120,6 +143,7 @@ export default function MapContent({
           url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
         />
         <FlyToActive activeRegion={activeRegion} />
+        <CtrlScrollZoom />
         {offices.map((office) => (
           <Marker
             key={office.name}

@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Modal from "./Modal";
+import PrivacyPolicyContent from "./PrivacyPolicyContent";
 
 const socials = [
   {
@@ -49,16 +51,41 @@ export default function ContactSection() {
     email: "",
     comment: "",
   });
+  const [consent, setConsent] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [error, setError] = useState("");
+  const [showPrivacy, setShowPrivacy] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError("");
+
+    if (!consent) {
+      setError("Необходимо согласие на обработку данных");
+      return;
+    }
+
     setSubmitting(true);
-    await new Promise((r) => setTimeout(r, 1500));
-    setSubmitting(false);
-    setSuccess(true);
-    setTimeout(() => setSuccess(false), 3000);
+
+    try {
+      const res = await fetch("/api/send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+
+      if (!res.ok) throw new Error("Ошибка отправки");
+
+      setSuccess(true);
+      setForm({ name: "", phone: "", email: "", comment: "" });
+      setConsent(false);
+      setTimeout(() => setSuccess(false), 5000);
+    } catch {
+      setError("Не удалось отправить. Попробуйте позже.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -118,6 +145,27 @@ export default function ContactSection() {
               Комментарий
             </label>
           </div>
+
+          <label className="flex items-start gap-3 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={consent}
+              onChange={(e) => setConsent(e.target.checked)}
+              className="mt-1 w-4 h-4 shrink-0 accent-gold"
+              required
+            />
+            <span className="text-white/50 text-xs leading-relaxed">
+              Согласен на обработку персональных данных в соответствии с{" "}
+              <button
+                type="button"
+                onClick={() => setShowPrivacy(true)}
+                className="text-gold hover:underline inline bg-transparent border-none p-0 cursor-pointer"
+              >
+                политикой конфиденциальности
+              </button>
+            </span>
+          </label>
+
           <button
             type="submit"
             disabled={submitting}
@@ -135,7 +183,18 @@ export default function ContactSection() {
               "Отправить заявку"
             )}
           </button>
+
           <AnimatePresence>
+            {error && (
+              <motion.div
+                className="text-center text-red-400 text-sm"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+              >
+                {error}
+              </motion.div>
+            )}
             {success && (
               <motion.div
                 className="text-center text-green-400 font-semibold"
@@ -186,6 +245,10 @@ export default function ContactSection() {
           </div>
         </div>
       </div>
+
+      <Modal isOpen={showPrivacy} onClose={() => setShowPrivacy(false)}>
+        <PrivacyPolicyContent />
+      </Modal>
     </section>
   );
 }

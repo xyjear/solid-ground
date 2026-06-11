@@ -2,10 +2,10 @@
 
 import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
-import * as THREE from "three";
+import type { BufferGeometry, Mesh } from "three";
 
 interface FloatingShapeProps {
-  geometry: THREE.BufferGeometry;
+  geometry: BufferGeometry;
   position: [number, number, number];
   rotationSpeed: [number, number, number];
   floatSpeed: number;
@@ -21,7 +21,7 @@ export default function FloatingShape({
   floatAmplitude,
   phase,
 }: FloatingShapeProps) {
-  const meshRef = useRef<THREE.Mesh>(null);
+  const meshRef = useRef<Mesh>(null);
   const initialY = position[1];
 
   useFrame((state) => {

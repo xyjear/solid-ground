@@ -1,6 +1,12 @@
 "use client";
 
+import { useState } from "react";
+import Modal from "./Modal";
+import PrivacyPolicyContent from "./PrivacyPolicyContent";
+
 export default function Footer() {
+  const [showPrivacy, setShowPrivacy] = useState(false);
+
   return (
     <footer className="border-t border-white/10 py-10 px-4">
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
@@ -25,11 +31,15 @@ export default function Footer() {
           <a href="#contact" className="text-white/50 hover:text-gold transition-colors">
             Контакты
           </a>
-          <button onClick={(e) => e.preventDefault()} className="bg-transparent border-none text-white/30 hover:text-gold transition-colors cursor-pointer">
+          <button onClick={() => setShowPrivacy(true)} className="bg-transparent border-none text-white/30 hover:text-gold transition-colors cursor-pointer">
             Политика конфиденциальности
           </button>
         </nav>
       </div>
+
+      <Modal isOpen={showPrivacy} onClose={() => setShowPrivacy(false)}>
+        <PrivacyPolicyContent />
+      </Modal>
     </footer>
   );
 }
