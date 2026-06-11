@@ -20,10 +20,6 @@ export default function HeroSection() {
           <span className="bg-gradient-to-r from-gold-300 via-yellow-400 to-gold-500 bg-clip-text text-transparent">
             SolidGround
           </span>
-          <br />
-          <span className="bg-gradient-to-r from-gold-300 via-yellow-400 to-gold-500 bg-clip-text text-transparent">
-            строим надёжно
-          </span>
         </motion.h1>
         <motion.p
           className="mt-6 text-lg md:text-xl text-white/70 max-w-2xl"
